@@ -5,6 +5,8 @@ from typing import List
 import mimetypes
 from markitdown import MarkItDown
 
+# Impostazione del titolo nella pagina Streamlit
+st.set_page_config(page_title="Mark It Down App", page_icon="🛠️")
 
 # Icone associate ai formati supportati
 FORMAT_ICONS = {
@@ -51,10 +53,16 @@ if directory_path:
 
 if loaded_files:
     st.subheader("📂 File Caricati")
+
+    # Checkbox per selezionare/deselezionare tutti i file
+    select_all = st.checkbox("Seleziona/Deseleziona tutti i file")
+
     selected_files = []
     for i, (name, file_obj, ext) in enumerate(loaded_files):
         icon = FORMAT_ICONS.get(ext, '📁')
-        selected = st.checkbox(f"{icon} {name}", key=i)
+
+        # Usare la checkbox di selezione per ogni file, con la possibilità di selezionare tutti i file
+        selected = st.checkbox(f"{icon} {name}", key=i, value=select_all)
         if selected:
             selected_files.append((name, file_obj, ext))
 
